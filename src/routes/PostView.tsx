@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import ISmallFarm from '../type';
 import { getAllSmallFarm } from '../api';
 
-export default function Home() {
+export default function PostView() {
   const { data: allSmallFarm, isLoading: isAllSmallFarmLoading } = useQuery<ISmallFarm[]>({
     queryKey: ['allSmallFarm'],
     queryFn: getAllSmallFarm,
