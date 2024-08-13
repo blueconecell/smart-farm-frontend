@@ -3,6 +3,7 @@ import Home from './routes/Home';
 import NotFound from './routes/NotFound';
 import Root from './components/Root';
 import PostView from './routes/PostView';
+import StudyModuleHome from './routes/StudyModuleHome';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: 'post',
         element: <PostView />,
+      },
+      {
+        path: 'study',
+        element: <StudyModuleHome />,
       },
     ],
   },
