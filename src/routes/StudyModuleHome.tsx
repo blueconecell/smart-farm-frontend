@@ -1,6 +1,6 @@
 import { Box, Container, HStack, SkeletonText, Text, VStack } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import ISmallFarm from '../type';
+import ISmallFarm from '../types';
 import { getAllSmallFarm } from '../api';
 
 export default function StudyModuleHome() {
