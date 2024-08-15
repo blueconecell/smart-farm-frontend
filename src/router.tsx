@@ -3,7 +3,8 @@ import Home from './routes/Home';
 import NotFound from './routes/NotFound';
 import Root from './components/Root';
 import Study from './routes/Study';
-import StudyModuleHome from './routes/StudyModuleHome';
+import StudyModuleHome from './routes/SmallFarm';
+import SmallFarm from './routes/SmallFarm';
 
 const router = createBrowserRouter([
   {
@@ -20,8 +21,8 @@ const router = createBrowserRouter([
         element: <Study />,
       },
       {
-        path: 'study',
-        element: <StudyModuleHome />,
+        path: 'smallfarm',
+        element: <SmallFarm />,
       },
     ],
   },

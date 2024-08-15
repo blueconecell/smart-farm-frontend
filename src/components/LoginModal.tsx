@@ -49,6 +49,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               />
               <Input variant={'filled'} placeholder="Password" type="password" />
             </InputGroup>
+            <Button colorScheme="blue">Confirm</Button>
           </VStack>
         </ModalBody>
       </ModalContent>

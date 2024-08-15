@@ -19,6 +19,6 @@ export interface IUser {
 export interface ISoilSample {
   id: number;
   humidValue: number;
-  measureed_at: string;
+  measured_at: string;
   soil_sample: number;
 }
