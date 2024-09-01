@@ -22,3 +22,10 @@ export interface ISoilSample {
   measured_at: string;
   soil_sample: number;
 }
+
+export interface IGasAreaSample {
+  id: number;
+  gasValue: number;
+  measured_at: string;
+  gasArea_sample: number;
+}

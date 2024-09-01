@@ -2,14 +2,13 @@ import { Box, Container, HStack, Skeleton, SkeletonCircle, SkeletonText, Stack, 
 import { useQuery } from '@tanstack/react-query';
 import ISmallFarm from '../types';
 import { getAllSmallFarm } from '../api';
+import { logoColor } from '../lib/color';
 
 export default function SmallFarm() {
   const { data: allSmallFarm, isLoading: isAllSmallFarmLoading } = useQuery<ISmallFarm[]>({
     queryKey: ['allSmallFarm'],
     queryFn: getAllSmallFarm,
   });
-  const logoColor = ['#D6EFD8', '#80AF81', '#508D4E', '#1A5319'];
-  console.log(!allSmallFarm);
   return (
     <VStack minH={'1200px'}>
       {!allSmallFarm ? (

@@ -22,9 +22,9 @@ import { FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSeedling } from 'react-icons/fa';
 import LoginModal from './LoginModal';
+import { logoColor } from '../lib/color';
 export default function Header() {
   const navigate = useNavigate();
-  const logoColor = ['#D6EFD8', '#80AF81', '#508D4E', '#1A5319'];
   const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
   return (
     <Stack

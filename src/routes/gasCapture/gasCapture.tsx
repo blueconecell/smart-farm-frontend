@@ -3,18 +3,19 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-import ISmallFarm, { ISoilSample } from '../types';
-import { getAllSmallFarm, getSoilSampleDetails } from '../api';
+import ISmallFarm, { IGasAreaSample, ISoilSample } from '../../types';
+import { getGasAreaSampleDetails } from '../../api';
 import { useParams } from 'react-router-dom';
-import { logoColor } from '../lib/color';
+import { logoColor } from '../../lib/color';
 
-export default function Study() {
-  const { soilSamplePK } = useParams();
-  const { data: soilSampleData, isLoading: isSoilSampleDataLoading } = useQuery<ISoilSample[]>({
-    queryKey: ['soilSample', soilSamplePK],
-    queryFn: getSoilSampleDetails,
+export default function GasCapture() {
+  const { gasAreaSamplePK } = useParams();
+  console.log('gasAreaSamplePK', gasAreaSamplePK); // 값이 제대로 나오는지 확인
+  const { data: gasAreaSampleData, isLoading: isgasAreaSampleLoading } = useQuery<IGasAreaSample[]>({
+    queryKey: ['gasAreaSample', gasAreaSamplePK],
+    queryFn: getGasAreaSampleDetails,
   });
-  const processedData = soilSampleData?.map((item) => ({
+  const processedData = gasAreaSampleData?.map((item) => ({
     time: new Date(item.measured_at).toLocaleTimeString('en-US', {
       month: '2-digit',
       day: '2-digit',
@@ -22,9 +23,8 @@ export default function Study() {
       minute: '2-digit',
       hour12: false, // 24시간 형식 사용
     }),
-    humidValue: item.humidValue,
+    gasValue: item.gasValue,
   }));
-  console.log('soilSampleData', soilSampleData);
   console.log('processedData', processedData);
   return (
     <VStack minH={'1200px'}>
@@ -43,7 +43,7 @@ export default function Study() {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="humidValue" stroke="#508D4E" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="gasValue" stroke="#508D4E" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     </VStack>

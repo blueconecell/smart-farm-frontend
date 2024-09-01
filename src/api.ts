@@ -11,3 +11,9 @@ export const getSoilSampleDetails = ({ queryKey }: QueryFunctionContext) => {
   const [_, soilSamplePK] = queryKey;
   return instance.get(`smallFarm/SoilSample/${soilSamplePK}`).then((response) => response.data);
 };
+
+export const getAllGasAreaSample = () => instance.get(`smallFarm/GasAreaSample`).then((response) => response.data);
+export const getGasAreaSampleDetails = ({ queryKey }: QueryFunctionContext) => {
+  const [_, gasAreaSamplePK] = queryKey;
+  return instance.get(`smallFarm/GasAreaSample/${gasAreaSamplePK}`).then((response) => response.data);
+};
