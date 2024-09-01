@@ -21,9 +21,7 @@ export default function Home() {
     <VStack minH={'1200px'}>
       <Box>
         <Box display={'flex'} justifyContent={'center'}>
-          <Text fontSize={'30px'} as={'b'} color={logoColor[3]}>
-            Gas
-          </Text>
+          <Text fontSize={'30px'} as={'b'} color={logoColor[3]}></Text>
         </Box>
         <HStack padding={'10px'}>
           <Box
