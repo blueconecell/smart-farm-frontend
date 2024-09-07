@@ -26,6 +26,10 @@ export default function GasCapture() {
     gasValue: item.gasValue,
   }));
   console.log('processedData', processedData);
+  // Tooltip formatter function
+  const tooltipFormatter = (value: number) => {
+    return [`${value} mg/L`, 'Gas Value'];
+  };
   return (
     <VStack minH={'1200px'}>
       <ResponsiveContainer width="80%" height={400}>
@@ -41,7 +45,7 @@ export default function GasCapture() {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="time" />
           <YAxis />
-          <Tooltip />
+          <Tooltip formatter={tooltipFormatter} />
           <Legend />
           <Line type="monotone" dataKey="gasValue" stroke="#508D4E" activeDot={{ r: 8 }} />
         </LineChart>
