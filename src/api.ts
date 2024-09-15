@@ -17,3 +17,5 @@ export const getGasAreaSampleDetails = ({ queryKey }: QueryFunctionContext) => {
   const [_, gasAreaSamplePK] = queryKey;
   return instance.get(`smallFarm/GasAreaSample/${gasAreaSamplePK}`).then((response) => response.data);
 };
+
+export const getLatestGasValue = () => instance.get(`smallFarm/LatestGasValue`).then((response) => response.data);

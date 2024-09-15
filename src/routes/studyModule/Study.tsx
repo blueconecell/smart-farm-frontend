@@ -4,7 +4,7 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import ISmallFarm, { ISoilSample } from '../../types';
-import { getAllSmallFarm, getSoilSampleDetails } from '../../api';
+import { getSoilSampleDetails } from '../../api';
 import { useParams } from 'react-router-dom';
 import { logoColor } from '../../lib/color';
 

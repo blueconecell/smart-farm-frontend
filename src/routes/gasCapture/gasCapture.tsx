@@ -3,18 +3,23 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-import ISmallFarm, { IGasAreaSample, ISoilSample } from '../../types';
-import { getGasAreaSampleDetails } from '../../api';
+import ISmallFarm, { IGasArea, IGasAreaSample, ISoilSample } from '../../types';
+import { getAllGasAreaSample, getGasAreaSampleDetails } from '../../api';
 import { useParams } from 'react-router-dom';
 import { logoColor } from '../../lib/color';
+import { formatDate } from '../../utils/dateUtils';
 
 export default function GasCapture() {
   const { gasAreaSamplePK } = useParams();
-  console.log('gasAreaSamplePK', gasAreaSamplePK); // 값이 제대로 나오는지 확인
   const { data: gasAreaSampleData, isLoading: isgasAreaSampleLoading } = useQuery<IGasAreaSample[]>({
     queryKey: ['gasAreaSample', gasAreaSamplePK],
     queryFn: getGasAreaSampleDetails,
   });
+  const { data: getAllGasAreaSampleData, isLoading: isgetAllGasAreaSampleLoading } = useQuery<IGasArea[]>({
+    queryKey: ['가스샘플 이름'],
+    queryFn: getAllGasAreaSample,
+  });
+
   const processedData = gasAreaSampleData?.map((item) => ({
     time: new Date(item.measured_at).toLocaleTimeString('en-US', {
       month: '2-digit',
@@ -25,13 +30,41 @@ export default function GasCapture() {
     }),
     gasValue: item.gasValue,
   }));
-  console.log('processedData', processedData);
   // Tooltip formatter function
   const tooltipFormatter = (value: number) => {
     return [`${value} mg/L`, 'Gas Value'];
   };
   return (
     <VStack minH={'1200px'}>
+      {getAllGasAreaSampleData?.map((gasArea) => (
+        <>
+          {Number(gasArea.id) === Number(gasAreaSamplePK) ? (
+            <Box
+              padding={5}
+              display={'flex'}
+              flexDir="column"
+              rounded={'10px'}
+              w={400}
+              border={'2px solid'}
+              justifyContent={'center'}
+              alignItems={'center'}
+              borderColor={logoColor[3]}
+              backgroundColor={logoColor[0]}
+              color={logoColor[3]}
+              fontWeight={'600'}
+              fontSize={'25px'}
+            >
+              <Text p={2}>{gasArea.name}</Text>
+
+              <Text fontWeight={'400'} fontSize={'20px'} p={2}>
+                생성일 : {formatDate(gasArea.created_at)}
+              </Text>
+              <Text p={2}>{gasArea.location}</Text>
+            </Box>
+          ) : null}
+        </>
+      ))}
+
       <ResponsiveContainer width="80%" height={400}>
         <LineChart
           data={processedData}

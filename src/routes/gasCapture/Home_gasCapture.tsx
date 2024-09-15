@@ -10,13 +10,24 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
-import ISmallFarm from '../../types';
-import { getAllSmallFarm } from '../../api';
 import { Link } from 'react-router-dom';
 import { logoColor } from '../../lib/color';
-
+import { getLatestGasValue } from '../../api';
+import { ILatestGasValue } from '../../types';
+import { useQuery } from '@tanstack/react-query';
+import { VscGraphLine } from 'react-icons/vsc';
+import { formatDate } from '../../utils/dateUtils';
 export default function Home_gasCapture() {
+  const { data: allLatestGasValue, isLoading: isallLatestGasValueLoading } = useQuery<ILatestGasValue[]>({
+    queryKey: ['LatestGasValue'],
+    queryFn: getLatestGasValue,
+  });
+  console.log('allLatestGasValue', allLatestGasValue);
+  let processesdGasValues: ILatestGasValue[] = [];
+  if (allLatestGasValue) {
+    processesdGasValues = allLatestGasValue.sort((a, b) => a.gasArea_sample_pk - b.gasArea_sample_pk);
+  }
+
   return (
     <VStack minH={'1200px'}>
       <Box>
@@ -25,84 +36,50 @@ export default function Home_gasCapture() {
             Gas
           </Text>
         </Box>
-        <HStack padding={'10px'}>
-          <Box
-            padding={5}
-            display={'flex'}
-            rounded={'10px'}
-            w={'70px'}
-            border={'2px solid'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            borderColor={logoColor[3]}
-            backgroundColor={logoColor[0]}
-            color={logoColor[3]}
-            _hover={{ bg: logoColor[3], color: logoColor[0] }}
-          >
-            <Link to={'/gas/1'}>
-              <Text fontWeight={'600'} fontSize={'30px'}>
-                1
-              </Text>
-            </Link>
+        {!allLatestGasValue ? (
+          <HStack>
+            <Skeleton rounded={'10px'} w={'70px'} height="40px">
+              <div>content1</div>
+              <div>content2</div>
+              <div>content1</div>
+              <div>content1</div>
+            </Skeleton>
+          </HStack>
+        ) : (
+          <Box display={'flex'} padding={'10px'} gap={'10px'} flexWrap="wrap">
+            {processesdGasValues.map((gasArea) => (
+              <Link to={`/gas/${gasArea.gasArea_sample_pk}`}>
+                <Box
+                  padding={5}
+                  display={'flex'}
+                  flexDir="column"
+                  rounded={'10px'}
+                  w={230}
+                  border={'2px solid'}
+                  justifyContent={'center'}
+                  alignItems={'center'}
+                  borderColor={logoColor[3]}
+                  backgroundColor={logoColor[0]}
+                  color={logoColor[3]}
+                  _hover={{ bg: logoColor[3], color: logoColor[0] }}
+                  fontWeight={'600'}
+                  fontSize={'25px'}
+                >
+                  <Text p={2}>{gasArea.gasArea_sample_name}</Text>
+                  <HStack>
+                    <VscGraphLine />
+                    <Text fontWeight={'400'} fontSize={'20px'}>
+                      {gasArea.gasValue}
+                    </Text>
+                  </HStack>
+                  <Text fontWeight={'400'} fontSize={'20px'}>
+                    {formatDate(gasArea.measured_at)}
+                  </Text>
+                </Box>
+              </Link>
+            ))}
           </Box>
-          <Box
-            padding={5}
-            display={'flex'}
-            rounded={'10px'}
-            w={'70px'}
-            border={'2px solid'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            borderColor={logoColor[3]}
-            backgroundColor={logoColor[0]}
-            color={logoColor[3]}
-            _hover={{ bg: logoColor[3], color: logoColor[0] }}
-          >
-            <Link to={'/gas/2'}>
-              <Text fontWeight={'600'} fontSize={'30px'}>
-                2
-              </Text>
-            </Link>
-          </Box>
-          <Box
-            padding={5}
-            display={'flex'}
-            rounded={'10px'}
-            w={'70px'}
-            border={'2px solid'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            borderColor={logoColor[3]}
-            backgroundColor={logoColor[0]}
-            color={logoColor[3]}
-            _hover={{ bg: logoColor[3], color: logoColor[0] }}
-          >
-            <Link to={'/gas/3'}>
-              <Text fontWeight={'600'} fontSize={'30px'}>
-                3
-              </Text>
-            </Link>
-          </Box>
-          <Box
-            padding={5}
-            display={'flex'}
-            rounded={'10px'}
-            w={'70px'}
-            border={'2px solid'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            borderColor={logoColor[3]}
-            backgroundColor={logoColor[0]}
-            color={logoColor[3]}
-            _hover={{ bg: logoColor[3], color: logoColor[0] }}
-          >
-            <Link to={'/gas/4'}>
-              <Text fontWeight={'600'} fontSize={'30px'}>
-                4
-              </Text>
-            </Link>
-          </Box>
-        </HStack>
+        )}
       </Box>
     </VStack>
   );

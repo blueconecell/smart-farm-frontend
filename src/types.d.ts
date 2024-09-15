@@ -29,3 +29,17 @@ export interface IGasAreaSample {
   measured_at: string;
   gasArea_sample: number;
 }
+
+export interface ILatestGasValue {
+  gasArea_sample_pk: number;
+  gasArea_sample_name: string;
+  gasValue: number;
+  measured_at: string;
+}
+export interface IGasArea {
+  id: number;
+  name: string;
+  location: string | null;
+  created_at: string;
+  team_pk: number;
+}
